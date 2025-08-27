@@ -1,0 +1,39 @@
+:root{
+  --ajou-blue:#00489b;
+  --bg:#0f1115; --panel:#151922; --border:#2a2f3a;
+  --text:#e9eef9; --muted:#98a2b3; --bot:#1a2030; --user:#0b5fff20;
+}
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Arial}
+.app{display:grid;grid-template-columns:340px 1fr;height:100%}
+.sidebar{border-right:1px solid var(--border);padding:16px;overflow:auto}
+.section-title{font-weight:700;margin:8px 0}
+.card-group{display:grid;grid-template-columns:1fr;gap:8px}
+.card{position:relative;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);padding:10px;border-radius:12px;background:var(--panel);cursor:pointer}
+.card.active{outline:2px solid var(--ajou-blue)}
+.badge{font-size:12px;color:#7da7ff}
+.checklist{display:grid;grid-template-columns:1fr;gap:6px}
+.checkitem{display:flex;gap:8px;align-items:center}
+.helper{margin-top:8px;color:var(--muted);font-size:12px}
+
+.main{display:flex;flex-direction:column;height:100%}
+.header{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
+.logo{width:36px;height:36px;border-radius:8px;background:var(--ajou-blue)}
+.title{font-weight:800}
+.content{display:flex;flex-direction:column;gap:12px;padding:12px;height:100%}
+.chat{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.inputbar{display:flex;gap:8px}
+.inputbar input{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:#0f1524;color:var(--text)}
+.inputbar button{padding:0 16px;border-radius:12px;border:1px solid var(--border);background:var(--ajou-blue);color:white;font-weight:600}
+.inputbar button:disabled{opacity:.5}
+
+.bubble{max-width:80%;padding:12px 14px;border-radius:14px}
+.from-bot{background:var(--bot)}
+.from-user{align-self:flex-end;background:var(--user);border:1px solid #3b82f6}
+
+.dots{display:inline-flex;gap:5px}
+.dot{width:6px;height:6px;border-radius:50%;background:#bcd0ff;animation:b .9s infinite ease-in-out}
+.dot:nth-child(2){animation-delay:.15s}
+.dot:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
