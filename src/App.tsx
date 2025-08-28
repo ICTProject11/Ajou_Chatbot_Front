@@ -3,22 +3,33 @@
 import { useCallback, useMemo, useState } from 'react';
 import CategorySelector from './components/CategorySelector';
 import Chat from './components/Chat';
-import { DEFAULT_MAIN } from './lib/categories';
-import type { MainCategory } from './types';
+import { DEFAULT_MAIN, INFO_CATEGORIES } from './lib/categories';
+import type { InfoPath, MainCategory } from './types';
 import './App.css';
 
 export default function App() {
   const [main, setMain] = useState<MainCategory>(DEFAULT_MAIN);
   const [subs, setSubs] = useState<string[]>([]);
+  const [infoPaths, setInfoPaths] = useState<InfoPath[]>([]);
 
   const onMainChange = useCallback((m: MainCategory) => {
     setMain(m);
     // 대분류 변경 시 하위 선택 초기화
     setSubs([]);
+    setInfoPaths([]);
   }, []);
 
   const onToggleSub = useCallback((label: string) => {
     setSubs(prev => prev.includes(label) ? prev.filter(x => x !== label) : [...prev, label]);
+  }, []);
+
+  const onToggleInfoPath = useCallback((p: InfoPath) => {
+    setInfoPaths(prev => {
+      const exists = prev.some(x => x.item === p.item && x.middle === p.middle && x.major === p.major);
+      return exists ? prev.filter(x => !(x.item === p.item && x.middle === p.middle && x.major === p.major)) : [...prev, p];
+    });
+    // subs 동기화(기존 사용처 호환)
+    setSubs(prev => prev.includes(p.item) ? prev.filter(x => x !== p.item) : [...prev, p.item]);
   }, []);
 
   const summary = useMemo(() => {
@@ -35,8 +46,8 @@ export default function App() {
 
   return (
     <div className="app">
-      <CategorySelector main={main} onMainChange={onMainChange} subs={subs} onToggleSub={onToggleSub}/>
-      <Chat main={main} subs={subs}/>
+      <CategorySelector main={main} onMainChange={onMainChange} subs={subs} onToggleSub={onToggleSub} onToggleInfoPath={onToggleInfoPath}/>
+      <Chat main={main} subs={subs} infoPaths={infoPaths}/>
     </div>
   );
 }

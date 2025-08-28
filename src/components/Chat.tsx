@@ -4,11 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 import MessageBubble from './MessageBubble';
 import { askServer } from '../lib/api';
-import type { MainCategory, Message } from '../types';
+import type { InfoPath, MainCategory, Message } from '../types';
 
-type Props = { main: MainCategory; subs: string[] };
+type Props = { main: MainCategory; subs: string[]; infoPaths?: InfoPath[] };
 
-export default function Chat({ main, subs }: Props) {
+export default function Chat({ main, subs, infoPaths = [] }: Props) {
   const [messages, setMessages] = useState<Message[]>([
     { 
       id: nanoid(), 
@@ -90,7 +90,7 @@ export default function Chat({ main, subs }: Props) {
     setPending(true);
 
     try {
-      const res = await askServer(main, subs, q);
+      const res = await askServer(main, subs, q, infoPaths);
       
       let answer = '';
       if (res.error) {
@@ -109,7 +109,7 @@ export default function Chat({ main, subs }: Props) {
     } finally {
       setPending(false);
     }
-  }, [input, main, subs, typeOut]);
+  }, [input, main, subs, infoPaths, typeOut]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && canSend) {

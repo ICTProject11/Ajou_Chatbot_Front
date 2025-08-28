@@ -15,3 +15,10 @@ export type AskResult = {
   sources?: string[];
   clarification?: string | null;
 };
+
+// info 카테고리 선택 경로 타입
+export type InfoPath = {
+  major: string;
+  middle: string;
+  item: string;
+};

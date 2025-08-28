@@ -1,16 +1,17 @@
 // src/components/CategorySelector.tsx
 
 import { MAIN_CATEGORIES, DEPARTMENTS, INFO_CATEGORIES } from '../lib/categories';
-import type { MainCategory } from '../types';
+import type { InfoPath, MainCategory } from '../types';
 
 type Props = {
   main: MainCategory;
   onMainChange: (m: MainCategory) => void;
   subs: string[];
   onToggleSub: (label: string) => void;
+  onToggleInfoPath?: (p: InfoPath) => void;
 };
 
-export default function CategorySelector({ main, onMainChange, subs, onToggleSub }: Props) {
+export default function CategorySelector({ main, onMainChange, subs, onToggleSub, onToggleInfoPath }: Props) {
   return (
     <aside className="sidebar">
       <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
@@ -74,7 +75,7 @@ export default function CategorySelector({ main, onMainChange, subs, onToggleSub
                           <input 
                             type="checkbox" 
                             checked={subs.includes(item)} 
-                            onChange={() => onToggleSub(item)} 
+                            onChange={() => (onToggleInfoPath ? onToggleInfoPath({ major: majorCategory, middle: middleCategory, item }) : onToggleSub(item))} 
                           />
                           <span style={{fontSize:13}}>{item}</span>
                         </label>
