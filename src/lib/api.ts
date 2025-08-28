@@ -11,9 +11,9 @@ export async function askServer(
     return post('/menu', { question });
   }
   const endpoint = ({ yoram:'/yoram', info:'/info', announcement:'/announcement', menu:'/menu' } as const)[main];
-  const payload: any = { question, add_intro: true }; // 필요 시 false로 보내면 인사 제거
+  const payload: any = { question, add_intro: true };
   if (main === 'yoram' || main === 'announcement') payload.departments = subs;
-  if (main === 'info') payload.topics = subs;
+  if (main === 'info') payload.selected_list = subs; // 'topics' 대신 'selected_list' 사용
   return post(endpoint, payload);
 }
 
