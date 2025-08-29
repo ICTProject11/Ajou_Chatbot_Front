@@ -13,8 +13,25 @@ export async function askServer(
   }
   const endpoint = ({ yoram:'/yoram', info:'/info', announcement:'/announcement', menu:'/menu' } as const)[main];
   const payload: any = { question, add_intro: true };
-  if (main === 'yoram' || main === 'announcement') payload.departments = subs;
-  if (main === 'info') {
+  
+  
+  
+  if (main === 'yoram') {
+   
+    payload.departments = subs;
+  }
+
+  else if (main === 'announcement') {
+   
+    payload.departments = subs.length > 0 ? subs : null;
+  }  
+  
+  
+  
+  
+  
+  
+  else if (main === 'info') {
     payload.selected_list = subs; 
     if (infoPaths.length > 0) {
       const majors = Array.from(new Set(infoPaths.map(p => p.major)));
